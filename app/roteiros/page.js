@@ -5,7 +5,7 @@ import CardRoteiro from "../../components/CardRoteiro";
 import { roteiros, categorias } from "../../data/roteiros";
 
 const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-const inicial = { q: "", categoria: "", duracao: "", ordem: "recentes" };
+const inicial = { q: "", categoria: "", ordem: "recentes" };
 
 export default function Roteiros() {
   const [f, setF] = useState(inicial);
@@ -21,7 +21,6 @@ export default function Roteiros() {
         r.dias >= min && r.dias <= max)
       .sort((a, b) =>
         f.ordem === "nome" ? a.nome.localeCompare(b.nome, "pt-BR")
-        : f.ordem === "duracao" ? a.dias - b.dias
         : b.id - a.id);
   }, [f]);
 
@@ -38,6 +37,14 @@ export default function Roteiros() {
             <label htmlFor="categoria">Categoria</label>
             <select id="categoria" value={f.categoria} onChange={set("categoria")}>
               <option value="">Todas</option>
+              <option value="">Artes</option>
+              <option value="">Ciência</option>
+              <option value="">Educação fFísica</option>
+              <option value="">Geografia</option>
+              <option value="">História</option>
+              <option value="">Língua Inglesa</option>
+              <option value="">Língua Portuguesa</option>
+              <option value="">Matemática</option>
               {categorias.map((c) => <option key={c}>{c}</option>)}
             </select>
           </div>
@@ -45,6 +52,7 @@ export default function Roteiros() {
             <label htmlFor="ordem">Ordenar por</label>
             <select id="ordem" value={f.ordem} onChange={set("ordem")}>
               <option value="recentes">Mais recentes</option>
+              <option value="recentes">Mais antigos</option>
               <option value="nome">Nome (A–Z)</option>
               <option value="duracao">Menor duração</option>
             </select>
