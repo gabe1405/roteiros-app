@@ -15,7 +15,6 @@ export default function Header() {
         <Link href="/roteiros" className={ativo("/roteiros")}>Roteiros</Link>
         <Link href="#" className="espaco">Ajuda</Link>
         <Link href="/login" className="btn">Login</Link>
-        <Link href="#" className="btn escuro">Crie sua conta</Link>
       </nav>
     </header>
   );
