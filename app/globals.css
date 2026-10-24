@@ -1,0 +1,75 @@
+:root{--verde:#cff5d4;--escuro:#1e1e1e;--cinza:#e6e6e6;--borda:#d9d9d9;--lilas:#ebe5f1;--lilas-escuro:#c9c3d3;--texto-suave:#9a9a9a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--escuro);background:#fff;line-height:1.4}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--escuro);outline-offset:2px}
+
+/* Cabeçalho */
+.topo{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 32px;background:#fff}
+.logo{font-size:28px;font-weight:700}
+.menu{display:flex;align-items:center;gap:12px;font-size:13px}
+.menu a{padding:4px 8px;border-radius:6px}
+.menu a.ativo{background:#f0f0f0}
+.menu .espaco{margin-left:56px}
+.btn{border:1px solid var(--borda);background:var(--cinza);border-radius:6px;padding:5px 12px;font:inherit;cursor:pointer}
+.btn.escuro{background:var(--escuro);color:#fff;border-color:var(--escuro)}
+
+/* Login */
+.fundo-verde{background:var(--verde)}
+.login{min-height:calc(100vh - 61px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;padding:48px 16px}
+.login h1{font-size:clamp(36px,6vw,56px);letter-spacing:-.02em}
+.form{width:min(280px,100%);background:#fff;border:1px solid var(--escuro);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.form label{font-size:13px}
+.form input{height:32px;border:1px solid var(--escuro);border-radius:8px;padding:0 10px;font:inherit;margin-bottom:10px}
+.form .esqueci{font-size:12px;margin:-6px 0 6px}
+.form .esqueci:hover{text-decoration:underline}
+.form button{height:36px;border:0;border-radius:6px;background:var(--escuro);color:#fff;font:inherit;cursor:pointer}
+
+/* Home */
+.destaques{padding:8px 32px 20px}
+.destaques h1{font-size:clamp(36px,6vw,48px);letter-spacing:-.02em;margin-bottom:16px}
+.slide{max-width:720px;height:340px;margin:0 auto;background:var(--lilas);border-radius:20px;display:flex;align-items:center;justify-content:center;gap:12px}
+.formas{position:relative;width:110px;height:100px}
+.formas span{position:absolute;background:var(--lilas-escuro)}
+.formas .tri{left:30px;top:0;width:50px;height:46px;border-radius:12px;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.formas .est{left:0;top:56px;width:40px;height:40px;border-radius:50%}
+.formas .qua{left:52px;top:44px;width:52px;height:52px;border-radius:12px}
+.pontos{display:flex;justify-content:center;gap:16px;margin-top:16px}
+.pontos button{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--escuro);background:transparent;cursor:pointer}
+.pontos button[aria-current="true"]{background:var(--escuro)}
+
+.atualizacoes{padding:40px 32px 48px;max-width:1200px;margin:0 auto}
+.atualizacoes h2{font-size:16px;font-weight:600;margin-bottom:40px;padding-left:8px}
+.grade{display:grid;grid-template-columns:repeat(3,1fr);gap:24px 24px}
+.card{border:1px solid var(--borda);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.card h3{font-size:15px;font-weight:600}
+.autor{display:flex;align-items:center;gap:10px}
+.avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#f3b86b,#c0527a);flex:none}
+.autor strong{display:block;font-size:10px;font-weight:600}
+.autor span{font-size:10px;color:var(--texto-suave)}
+
+@media(max-width:800px){
+  .topo{flex-wrap:wrap;padding:12px 16px}
+  .menu{flex-wrap:wrap;gap:6px}
+  .menu .espaco{margin-left:0}
+  .destaques,.atualizacoes{padding-left:16px;padding-right:16px}
+  .slide{height:220px}
+  .grade{grid-template-columns:1fr}
+}
+
+/* Roteiros */
+.busca-area{padding:32px 32px 28px}
+.busca-area h1{font-size:clamp(32px,5vw,44px);letter-spacing:-.02em;margin-bottom:20px}
+.filtros{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;max-width:1200px}
+.campo{display:flex;flex-direction:column;gap:4px;font-size:12px}
+.campo.busca{flex:1 1 280px}
+.campo input,.campo select{height:36px;border:1px solid var(--escuro);border-radius:8px;padding:0 10px;font:inherit;font-size:14px;background:#fff;min-width:150px}
+.campo.busca input{width:100%}
+.filtros .btn{height:36px}
+.lista{padding:32px;max-width:1200px;margin:0 auto}
+.contagem{font-size:14px;font-weight:600;margin-bottom:20px;padding-left:4px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;background:#f0f0f0;border-radius:999px;padding:2px 10px}
+.card p{font-size:13px;color:#555}
+.vazio{border:1px dashed var(--borda);border-radius:8px;padding:32px;text-align:center;font-size:14px;color:#555}
+@media(max-width:800px){.busca-area,.lista{padding-left:16px;padding-right:16px}.campo select{width:100%}.campo{flex:1 1 140px}}
