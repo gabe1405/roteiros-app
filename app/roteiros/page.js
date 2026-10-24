@@ -42,15 +42,6 @@ export default function Roteiros() {
             </select>
           </div>
           <div className="campo">
-            <label htmlFor="duracao">Duração</label>
-            <select id="duracao" value={f.duracao} onChange={set("duracao")}>
-              <option value="">Qualquer</option>
-              <option value="1-3">1 a 3 dias</option>
-              <option value="4-7">4 a 7 dias</option>
-              <option value="8-99">8 dias ou mais</option>
-            </select>
-          </div>
-          <div className="campo">
             <label htmlFor="ordem">Ordenar por</label>
             <select id="ordem" value={f.ordem} onChange={set("ordem")}>
               <option value="recentes">Mais recentes</option>
