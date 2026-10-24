@@ -1,12 +1,7 @@
-export const roteiros = [
-  { id: 8, nome: "Litoral de Santa Catarina", cat: "Praia", dias: 5, desc: "Praias e trilhas entre Florianópolis e Bombinhas." },
-  { id: 7, nome: "Serra Gaúcha", cat: "Montanha", dias: 4, desc: "Vinícolas e cidades de colonização italiana." },
-  { id: 6, nome: "Centro histórico de Paraty", cat: "Cidade", dias: 3, desc: "Casarios, cachoeiras e passeios de barco." },
-  { id: 5, nome: "Chapada Diamantina", cat: "Aventura", dias: 7, desc: "Trilhas, poços e cachoeiras na Bahia." },
-  { id: 4, nome: "Foz do Iguaçu", cat: "Cidade", dias: 2, desc: "Cataratas, Parque das Aves e Itaipu." },
-  { id: 3, nome: "Lençóis Maranhenses", cat: "Aventura", dias: 6, desc: "Dunas e lagoas entre Barreirinhas e Atins." },
-  { id: 2, nome: "Campos do Jordão", cat: "Montanha", dias: 3, desc: "Clima de montanha, chocolate e passeios a pé." },
-  { id: 1, nome: "Fernando de Noronha", cat: "Praia", dias: 9, desc: "Mergulho, trilhas e pôr do sol no arquipélago." },
+export const roteiro = [
+  { "id": "r1", "titulo": "Geografia do Paraná", "autorId": "1", "categoria": "Geografia",  "descricao": "Relevos do Paraná", "dataModificacao": "15-03-2022", "roteiro": "arquivo1.txt" },
+  { "id": "r2", "titulo": "Função trigonométrica", "autorId": "2", "categoria": "Matematica",  "descricao": "Regras basicas da trigonometria", "dataModificacao": "16-08-2025", "roteiro": "arquivo2.txt" },
+  { "id": "r3", "titulo": "Independencia do Brasil", "autorId": "1", "categoria": "Historia", "descricao": "História da Independência do Brasil", "dataModificacao": "05-06-2026", "roteiro": "arquivo3.txt" },
+  { "id": "r4", "titulo": "Verbo to be", "autorId": "3", "categoria": "Lingua Inglesa", "descricao": "Regras basicas do verbo to be", "dataModificacao": "10-01-2020", "roteiro": "arquivo4.txt"}
 ];
 
-export const categorias = ["Praia", "Montanha", "Cidade", "Aventura"];
