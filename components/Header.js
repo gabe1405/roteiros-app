@@ -1,18 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { sair } from "../app/actions";             // <- novo
 
 export default function Header({ usuario }) {
   const path = usePathname();
-  const router = useRouter();
   const ativo = (href) => (path === href ? "ativo" : undefined);
-
-  async function sair() {
-    await fetch("/api/logout", { method: "POST" });
-    router.push("/");
-    router.refresh();
-  }
 
   return (
     <header className="topo">
@@ -21,7 +15,18 @@ export default function Header({ usuario }) {
         <Link href="/" className={ativo("/")}>Página inicial</Link>
         <Link href="/roteiros" className={ativo("/roteiros")}>Roteiros</Link>
         <Link href="#" className="espaco">Ajuda</Link>
-        <Link href="/login" className="btn">Login</Link>
+        {usuario ? (
+          <>
+            <span className="ola">Olá, {usuario.nome}</span>
+            <form action={sair}>
+              <button type="submit" className="btn">Sair</button>
+            </form>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className="btn">Login</Link>
+          </>
+        )}
       </nav>
     </header>
   );
