@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import {useState, useEffect, useMemo} from "react";
 import CardRoteiro from "../../components/CardRoteiro";
 import { roteiros, categorias } from "../../data/roteiros";
 
 const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-const inicial = { q: "", categoria: "", ordem: "recentes" };
+const inicial = { q: "", categoria: "", mod: "", ordem: "recentes" };
 
 const parseData = (dataStr) => {
   if(!dataStr){
@@ -16,21 +16,55 @@ const parseData = (dataStr) => {
 }
 
 export default function Roteiros() {
-  const [f, setF] = useState(inicial);
-  const set = (campo) => (e) => setF({ ...f, [campo]: e.target.value });
+  const [roteiros, setRoteiros] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(null);
+  const[f, setF] = useState(inicial);
+  
+  useEffect(() => {
+    async function carregarDados(){
+      try{
+        setCarregando(true);
+        const resposta = await fetch("/data/roteiros.json");
+        if(!resposta.ok){
+          throw new Error("Falha ao carregar dados");
+        }
+        const dados = await resposta.json();
+        setRoteiros(dados);
+      }catch(err){
+        console.error(err);
+        setErro("Não foi possivel carregar os roteiros");
+      }finally{
+        setCarregando(false);
+      }
+    }
+    carregarDados();
+  }, []);
+  const set = (campo) => (e) => setF({...f, [campo]: e.target.value});
+
 
   const itens = useMemo(() => {
     const q = norm(f.q.trim());
-    const [min, max] = f.duracao ? f.duracao.split("-").map(Number) : [0, 999];
-    return roteiros
-      .filter((r) =>
-        (!q || norm(`${r.nome} ${r.desc}`).includes(q)) &&
-        (!f.categoria || r.cat === f.categoria) &&
-        r.dias >= min && r.dias <= max)
-      .sort((a, b) =>
-        f.ordem === "nome" ? a.nome.localeCompare(b.nome, "pt-BR")
-        : b.id - a.id);
-  }, [f]);
+    const hoje = new Date();
+    return roteiros.filter((r) => {
+      const atendeTexto = !q || norm (`${r.titulo} ${r.descricao}`).includes(q);
+      const atendeCat = !f.categoria || r.cat === f.categoria;
+      let atendeMod = true;
+      if(f.mod){
+        const dataItem = parseData(r.dataModificacao);
+        const diferencaDias = (hoje - dataItem) / (1000*60*60*24);
+        atendeMod = diferencaDias >= 0 && diferencaDias <= Number(f.mod);
+    }
+    return atendeTexto && atendeCat && atendeMod;
+  }) 
+  
+  .sort((a, b) => {
+    if (f.ordem === "titulo") return a.nome.localeCompare(b.nome, "pt-BR");
+    if (f.ordem === "dataModificacao") return parseData(a.dataModificacao) - parseData(b.dataModificacao);
+    if (f.ordem === "dataModificacao") return parseData(b.dataModificacao) - parseData(a.dataModificacao);
+    return b.id - a.id;
+    });   
+  }, [f, roteiros]);
 
   return (
     <main>
@@ -39,21 +73,20 @@ export default function Roteiros() {
         <form className="filtros" role="search" onSubmit={(e) => e.preventDefault()}>
           <div className="campo busca">
             <label htmlFor="q">Pesquisar</label>
-            <input id="q" type="search" placeholder="Digite o nome ou destino" value={f.q} onChange={set("q")} />
+            <input id="q" type="search" placeholder="Digite o nome ou Autor" value={f.q} onChange={set("q")} />
           </div>
           <div className="campo">
             <label htmlFor="categoria">Categoria</label>
             <select id="categoria" value={f.categoria} onChange={set("categoria")}>
-              <option value="">Todas</option>
-              <option value="">Artes</option>
-              <option value="">Ciência</option>
-              <option value="">Educação fFísica</option>
-              <option value="">Geografia</option>
-              <option value="">História</option>
-              <option value="">Língua Inglesa</option>
-              <option value="">Língua Portuguesa</option>
-              <option value="">Matemática</option>
-              {categorias.map((c) => <option key={c}>{c}</option>)}
+              <option value="Todas">Todas</option>
+              <option value="Artes">Artes</option>
+              <option value="Ciencia">Ciência</option>
+              <option value="Educacao Fisica">Educação Física</option>
+              <option value="Geografia">Geografia</option>
+              <option value="Historia">História</option>
+              <option value="Lingua Inglesa">Língua Inglesa</option>
+              <option value="Lingua Portuguesa">Língua Portuguesa</option>
+              <option value="Matematica">Matemática</option>
             </select>
           </div>
           <div className="campo">
@@ -62,7 +95,6 @@ export default function Roteiros() {
               <option value="recentes">Mais recentes</option>
               <option value="recentes">Mais antigos</option>
               <option value="nome">Nome (A–Z)</option>
-              <option value="duracao">Menor duração</option>
             </select>
           </div>
           <button type="button" className="btn" onClick={() => setF(inicial)}>Limpar filtros</button>
