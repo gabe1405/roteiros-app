@@ -2,7 +2,8 @@
 
 import { useState, useMemo } from "react";
 import CardRoteiro from "../../components/CardRoteiro";
-import { roteiros } from "../../data/roteiros";
+import { roteiros as listaRoteiros } from "../../data/roteiros";
+import usuarios from "../../data/usuarios.json";
 
 const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const inicial = { q: "", categoria: "", mod: "", ordem: "recentes" };
@@ -12,6 +13,15 @@ const parseData = (dataStr) => {
   const [dia, mes, ano] = dataStr.split("-").map(Number);
   return new Date(ano, mes - 1, dia);
 };
+
+// Liga autorId (roteiro) ao id (usuário)
+const roteiros = listaRoteiros.map((r) => {
+  const usuario = usuarios.find((u) => u.id === r.autorId);
+  return {
+    ...r,
+    autor: usuario ? usuario.nome : "Autor desconhecido",
+  };
+});
 
 export default function Roteiros() {
   const [f, setF] = useState(inicial);
@@ -24,7 +34,7 @@ export default function Roteiros() {
 
     return roteiros
       .filter((r) => {
-        const atendeTexto = !q || norm(`${r.titulo} ${r.descricao}`).includes(q);
+        const atendeTexto = !q || norm(`${r.titulo} ${r.descricao} ${r.autor}`).includes(q);
         const atendeCat = !f.categoria || r.categoria === f.categoria;
         let atendeMod = true;
         if (f.mod) {
@@ -48,7 +58,7 @@ export default function Roteiros() {
         <form className="filtros" role="search" onSubmit={(e) => e.preventDefault()}>
           <div className="campo busca">
             <label htmlFor="q">Pesquisar</label>
-            <input id="q" type="search" placeholder="Digite o título ou a descrição" value={f.q} onChange={set("q")} />
+            <input id="q" type="search" placeholder="Digite o título, a descrição ou o autor" value={f.q} onChange={set("q")} />
           </div>
           <div className="campo">
             <label htmlFor="categoria">Categoria</label>

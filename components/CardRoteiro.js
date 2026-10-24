@@ -6,6 +6,8 @@ export default function CardRoteiro({ roteiro }) {
       <div className="tags">
         <span className="tag">{roteiro.categoria}</span>
         <span className="tag">{roteiro.dataModificacao}</span>
+        <span className="tag"> Revisado por: {roteiro.autor}</span>
+
       </div>
     </article>
   );
