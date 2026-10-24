@@ -10,11 +10,10 @@ const inicial = { q: "", categoria: "", mod: "", ordem: "recentes" };
 
 const parseData = (dataStr) => {
   if (!dataStr) return new Date(0);
-  const [dia, mes, ano] = dataStr.split("-").map(Number);
+  const [ano, mes, dia] = dataStr.split("-").map(Number);
   return new Date(ano, mes - 1, dia);
 };
 
-// Liga autorId (roteiro) ao id (usuário)
 const roteiros = listaRoteiros.map((r) => {
   const usuario = usuarios.find((u) => u.id === r.autorId);
   return {
