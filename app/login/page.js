@@ -1,9 +1,33 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function Login() {
-  function entrar(e) {
+  const router = useRouter();
+  const [erro, setErro] = useState("");
+  const [enviando, setEnviando] = useState(false);
+
+  async function entrar(e) {
     e.preventDefault();
-    // Ligue aqui a sua autenticação (API, NextAuth, etc.)
+    setErro("");
+    setEnviando(true);
+    const dados = new FormData(e.currentTarget);
+
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario: dados.get("usuario"), senha: dados.get("senha") }),
+    });
+
+    if (res.ok) {
+      router.push("/");
+      router.refresh(); // atualiza o cabeçalho com o usuário logado
+    } else {
+      const { erro } = await res.json();
+      setErro(erro || "Não foi possível entrar.");
+      setEnviando(false);
+    }
   }
 
   return (
@@ -15,7 +39,8 @@ export default function Login() {
         <label htmlFor="senha">Senha</label>
         <input id="senha" name="senha" type="password" autoComplete="current-password" required />
         <a className="esqueci" href="#">Esqueci minha senha</a>
-        <button type="submit">Entrar</button>
+        {erro && <p className="erro" role="alert">{erro}</p>}
+        <button type="submit" disabled={enviando}>{enviando ? "Entrando..." : "Entrar"}</button>
       </form>
     </main>
   );

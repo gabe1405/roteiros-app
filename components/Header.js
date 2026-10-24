@@ -1,11 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function Header() {
+export default function Header({ usuario }) {
   const path = usePathname();
+  const router = useRouter();
   const ativo = (href) => (path === href ? "ativo" : undefined);
+
+  async function sair() {
+    await fetch("/api/logout", { method: "POST" });
+    router.push("/");
+    router.refresh();
+  }
 
   return (
     <header className="topo">
