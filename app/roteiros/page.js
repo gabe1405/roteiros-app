@@ -7,6 +7,14 @@ import { roteiros, categorias } from "../../data/roteiros";
 const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 const inicial = { q: "", categoria: "", ordem: "recentes" };
 
+const parseData = (dataStr) => {
+  if(!dataStr){
+    return new Date(0);
+  }
+  const [dia, mes, ano] = dataStr.split("-").map(Number);
+  return new Date(ano, mes - 1, dia);
+}
+
 export default function Roteiros() {
   const [f, setF] = useState(inicial);
   const set = (campo) => (e) => setF({ ...f, [campo]: e.target.value });
