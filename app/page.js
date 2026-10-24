@@ -1,4 +1,5 @@
 import Destaques from "../components/Destaques";
+import Data from "../components/Data";
 
 const atualizacoes = [
   "Roteiro 1 Adicionado",
@@ -19,8 +20,9 @@ export default function Home() {
           {atualizacoes.map((titulo) => (
             <article className="card" key={titulo}>
               <h3>{titulo}</h3>
+              <Data valor="2026-10-24"/>
               <div className="autor">
-                <div className="avatar" />
+                <div className="avatar" />            
                 <div><strong>Title</strong><span>Description</span></div>
               </div>
             </article>
