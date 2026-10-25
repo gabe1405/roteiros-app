@@ -15,7 +15,6 @@ export default function Header() {
       <nav className="menu" aria-label="Principal">
         <Link href="/" className={ativo("/")}>Página inicial</Link>
         <Link href="/roteiros" className={ativo("/roteiros")}>Roteiros</Link>
-        <Link href="#" className="espaco">Ajuda</Link>
         {usuario ? (
           <>
             <span className="ola">Olá, {usuario.nome}</span>
