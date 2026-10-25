@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { sair } from "../app/actions";             // <- novo
+import { useAuth } from "./AuthProvider";
 
-export default function Header({ usuario }) {
+export default function Header() {
   const path = usePathname();
+  const { usuario, sair } = useAuth();
   const ativo = (href) => (path === href ? "ativo" : undefined);
 
   return (
@@ -18,9 +19,7 @@ export default function Header({ usuario }) {
         {usuario ? (
           <>
             <span className="ola">Olá, {usuario.nome}</span>
-            <form action={sair}>
-              <button type="submit" className="btn">Sair</button>
-            </form>
+            <button type="button" className="btn" onClick={sair}>Sair</button>
           </>
         ) : (
           <>

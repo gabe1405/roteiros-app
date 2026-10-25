@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from "../components/Header";
+import AuthProvider from "../components/AuthProvider";
 
 export const metadata = {
   title: "Roteiros",
@@ -10,8 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <body>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
